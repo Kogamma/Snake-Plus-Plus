@@ -17,21 +17,17 @@ void Snake::Update(sf::Time deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		parts[0]->SetDirection(-1, 0);
-		dir.y = 0;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		dir.x = 1;
-		dir.y = 0;
+		parts[0]->SetDirection(1, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		dir.x = 0;
-		dir.y = -1;
+		parts[0]->SetDirection(0, -1);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		dir.x = 0;
-		dir.y = 1;
+		parts[0]->SetDirection(0, 1);
 	}
 }
