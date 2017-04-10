@@ -4,8 +4,6 @@
 #include "Pickup.h"
 #include <SFML\Graphics.hpp>
 
-using namespace std;
-
 
 int main()
 {
@@ -27,15 +25,16 @@ int main()
 		for (int j = 0; j < gridSize.y; j++)
 		{
 			sf::RectangleShape newBox(sf::Vector2f(tileSize, tileSize));
-			sf::Color newRandomColor(rand() % (0, 255) + 255, rand() % (0, 255) + 255, rand() % (0, 255) + 255, 255);
+			sf::Color newRandomColor(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1, 255);
 			newBox.setFillColor(newRandomColor);
 			newBox.setPosition(tileSize * i, tileSize * j);
 			boxes[i][j] = newBox;
 		}
 	}
-
+    
 	// A vector that holds all the SnakeParts that make up the whole snake
-	vector<SnakePart*> snake;
+	std::vector<SnakePart*> snakeParts;
+    snakeParts.push_back(new SnakePart(sf::Vector2i((int)(gridSize.x / 2), (int)(gridSize.y / 2)), sf::Vector2i(0, 0)));
 
 	while (window.isOpen())
 	{
