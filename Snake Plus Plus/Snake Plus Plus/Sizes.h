@@ -8,7 +8,7 @@ public:
     const int screenSize = 800;
 
     // How many tiles there will be on the screen
-    const int gridSize = 40;
+    const int gridSize = 25;
 
     // How big the tiles will be in the game
     const float tileSize = (float)(screenSize / gridSize);
