@@ -46,7 +46,9 @@ private:
     bool addPieces = false;
 
     // If we pressed a key this frame
-    bool hasPressedKey = true;
+    bool hasPressedKey = true;    
+    // Used to store what direction we chose with our input
+    sf::Vector2i newDir;
 
     // Variables for counting down time for updating the position of the SnakeParts
     float countdown;

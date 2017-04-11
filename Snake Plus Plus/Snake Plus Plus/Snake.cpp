@@ -12,11 +12,13 @@ Snake::Snake(int startSize, std::vector<SnakePart*>& snakeParts)
     // Creates the first SnakePart, the head, and adds it to the vector
     parts.push_back(new SnakePart(
         sf::Vector2i(Sizes().screenSize / Sizes().gridSize, Sizes().screenSize / Sizes().gridSize),
-        sf::Vector2i(0,0)));
+        sf::Vector2i(1,0)));
 
     // Sets starting values for the countdown variables
     countdown = 0.1f;
     timer = countdown;
+
+    newDir = sf::Vector2i(0, 0);
 }
 
 
@@ -28,28 +30,28 @@ void Snake::Update(const sf::Time deltaTime)
 {
     // The time since the last frame
     float dt = deltaTime.asSeconds();
-
+   
     if (!hasPressedKey)
     {
         // Assumes by default that we have pressed a key
         hasPressedKey = true;
 
-        // Sets the direction of the first SnakePart, the head, based on what key we just pressed
+        // Sets the new direction of the first SnakePart, the head, based on what key we just pressed
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            parts.front()->SetDirection(-1, 0);
+            newDir = sf::Vector2i(-1, 0);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            parts.front()->SetDirection(1, 0);
+            newDir = sf::Vector2i(1, 0);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            parts.front()->SetDirection(0, -1);
+            newDir = sf::Vector2i(0, -1);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            parts.front()->SetDirection(0, 1);
+            newDir = sf::Vector2i(0, 1);
         }
         else
         {
@@ -61,11 +63,12 @@ void Snake::Update(const sf::Time deltaTime)
         {
             if (hasPressedKey)
             {
-                parts.front()->SetLastDirection(parts[0]->GetDirection());
+                parts.front()->SetLastDirection(newDir);
                 addPieces = true;
             }
         }
     }
+
     // Checks if we have counted down the timer
     if (timer <= 0)
     {
@@ -74,7 +77,14 @@ void Snake::Update(const sf::Time deltaTime)
 
         // Allows input again 
         hasPressedKey = false;
-
+        
+        // Checks first if we haven't moved yet
+        if(parts.front()->GetLastDirection() != sf::Vector2i(0,0))
+            // If we have, we apply the newDir
+            parts.front()->SetDirection(newDir);
+        else
+            // If we have not we continue to stand still
+            parts.front()->SetDirection(0,0);
         // Updates the first SnakePart after we have checked for input and set the direction
         // Also checks if we move outside the screen
         isGameOver = parts.front()->MoveForward();
@@ -99,7 +109,6 @@ void Snake::Update(const sf::Time deltaTime)
                 }
             }
         }
-
         
         // Uses the sizes value to see if we have reached the desired starting size of the snake yet.
         if (size > 1 && addPieces)
