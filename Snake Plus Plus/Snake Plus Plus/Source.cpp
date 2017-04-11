@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 #include "SnakePart.h"
+#include "Snake.h"
 #include "Pickup.h"
+#include "Sizes.h"
 #include <SFML\Graphics.hpp>
 
 
@@ -9,32 +11,27 @@ int main()
 {
 	// seeds our rand()
 	srand(time(NULL));
-
-	sf::RenderWindow window(sf::VideoMode(800, 800), "Snake Plus Plus");
-	
-	// How many tiles there will be in the grid
-	static sf::Vector2i gridSize(40,40);
-
-	// Tiles will always be square, thereby they only need one specified size
-	static float tileSize = float(window.getSize().x / gridSize.x);
-
-	sf::RectangleShape boxes[40][40];
-
-	for (int i = 0; i < gridSize.x; i++)
-	{
-		for (int j = 0; j < gridSize.y; j++)
-		{
-			sf::RectangleShape newBox(sf::Vector2f(tileSize, tileSize));
-			sf::Color newRandomColor(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1, 255);
-			newBox.setFillColor(newRandomColor);
-			newBox.setPosition(tileSize * i, tileSize * j);
-			boxes[i][j] = newBox;
-		}
-	}
     
-	// A vector that holds all the SnakeParts that make up the whole snake
-	std::vector<SnakePart*> snakeParts;
-    snakeParts.push_back(new SnakePart(sf::Vector2i((int)(gridSize.x / 2), (int)(gridSize.y / 2)), sf::Vector2i(0, 0)));
+    // Counts the time
+    sf::Clock time;
+    // Counts time since the last frame
+    sf::Time currentTime;
+
+	sf::RenderWindow window(sf::VideoMode(Sizes().screenSize, Sizes().screenSize), "Snake Plus Plus");
+
+    // The vector holding all the snakeParts the Snake consists of
+    std::vector<SnakePart*> snakeParts;
+   
+    // Creates a new Snake with 3 parts and a reference to the snakeParts vector 
+    Snake* snake = new Snake(3, snakeParts);;
+    
+    // Creates a new pickup
+    Pickup* pickUp = new Pickup();
+
+start: // subroutine we call when the game is restarted   
+
+    // Gives the pickUp a new, random position when we start the game
+    pickUp->NewPosition(snake->GetAllPositions());
 
 	while (window.isOpen())
 	{
@@ -47,13 +44,36 @@ int main()
 
 		window.clear();
 
-		for (int i = 0; i < gridSize.x; i++)
-		{
-			for (int j = 0; j < gridSize.y; j++)
-			{
-				window.draw(boxes[i][j]);
-			}
-		}
+        // If we press 'R', the game resets
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        {   
+            snake->Reset();
+            
+            goto start;
+        }
+        
+        // Checks if we haven't got GAME OVER
+        if (!snake->GetGameOver())
+        {
+            // Starts counting the time
+            currentTime = time.restart();
+
+            // Updates the Snake using the time since the last frame
+            snake->Update(currentTime);
+
+            // Checks if the pickup collided with the first part of the snake, the head
+            if (pickUp->CheckCollision(snake->GetSnakePartPosition(0)))
+            {
+                // If so, add a new part...
+                snake->AddSnakePart();
+                // ... and give the pickup a new, random position
+                pickUp->NewPosition(snake->GetAllPositions());
+            }
+        }
+        // Calls the draw method in the snake
+        snake->DrawSnake(window);
+        pickUp->Draw(window);
+
 		window.display();
 	}
 

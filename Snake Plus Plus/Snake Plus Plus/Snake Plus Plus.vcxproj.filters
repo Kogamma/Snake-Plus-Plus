@@ -27,6 +27,9 @@
     <ClCompile Include="Snake.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GridShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pickup.h">
@@ -36,6 +39,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Snake.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sizes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GridShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
