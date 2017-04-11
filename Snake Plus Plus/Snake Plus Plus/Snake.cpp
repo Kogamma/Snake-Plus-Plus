@@ -11,7 +11,7 @@ Snake::Snake(int startSize, std::vector<SnakePart*>& snakeParts)
 
     // Creates the first SnakePart, the head, and adds it to the vector
     parts.push_back(new SnakePart(
-        sf::Vector2i(Sizes().screenSize / Sizes().gridSize, Sizes().screenSize / Sizes().gridSize),
+        sf::Vector2i(Sizes().gridSize / 2, Sizes().gridSize / 2),
         sf::Vector2i(1,0)));
 
     // Sets starting values for the countdown variables
@@ -223,7 +223,7 @@ void Snake::Reset()
 
     // Creates the original SnakePart in the middle of the screen again
     parts.push_back(new SnakePart(
-        sf::Vector2i(Sizes().screenSize / Sizes().gridSize, Sizes().screenSize / Sizes().gridSize),
+        sf::Vector2i(Sizes().gridSize / 2, Sizes().gridSize / 2),
         sf::Vector2i(0, 0)));
 
     // Resets timer

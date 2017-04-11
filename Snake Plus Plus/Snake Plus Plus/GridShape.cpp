@@ -1,7 +1,6 @@
 #include "GridShape.h"
 
 
-
 GridShape::GridShape()
 {
     // Sets the size of the shape based on the tileSize value in the Sizes class
