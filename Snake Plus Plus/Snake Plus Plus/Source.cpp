@@ -1,13 +1,19 @@
+#include <SFML\Graphics.hpp>
+
+#include <Windows.h>
+
 #include <iostream>
 #include <vector>
-#include "SnakePart.h"
+
 #include "Snake.h"
 #include "Pickup.h"
 #include "Sizes.h"
-#include <SFML\Graphics.hpp>
 
-
+#if _DEBUG
 int main()
+#else
+int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+#endif
 {
 	// seeds our rand()
 	srand(time(NULL));

@@ -11,7 +11,7 @@ Snake::Snake(int startSize)
 
     // Creates the first SnakePart, the head, and adds it to the vector
     parts.push_back(new SnakePart(
-        sf::Vector2i(Sizes().gridSize / 2, Sizes().gridSize / 2),
+        sf::Vector2i(round(Sizes().gridSize / 2), round(Sizes().gridSize / 2)),
         sf::Vector2i(1,0)));
 
     // Sets starting values for the countdown variables
@@ -95,18 +95,14 @@ void Snake::Update(const sf::Time deltaTime)
             // Checks if we collided with ourselves
             isGameOver = CheckSelfCollision();
 
-            // Checks again if the game is over
-            if (!isGameOver)
+            // Iterates all the SnakeParts except the first one
+            for (size_t i = 1; i < parts.size(); i++)
             {
-                // Iterates all the SnakeParts except the first one
-                for (int i = 1; i < (int)parts.size(); i++)
-                {
-                    // Sets the traveling direction of the SnakePart to that of the one before it
-                    parts[i]->SetDirection(parts[i - 1]->GetLastDirection());
+                // Sets the traveling direction of the SnakePart to that of the one before it
+                parts[i]->SetDirection(parts[i - 1]->GetLastDirection());
                     
-                    // Moves the SnakePart forward
-                    parts[i]->MoveForward();
-                }
+                // Moves the SnakePart forward
+                parts[i]->MoveForward();
             }
         }
         

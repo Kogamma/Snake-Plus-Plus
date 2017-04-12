@@ -27,14 +27,14 @@ void Pickup::NewPosition(std::vector<sf::Vector2i*> gridPositions)
         for (auto it = gridPositions.begin(); it != gridPositions.end(); it++)
         {
             // Checks if the newPosition is not the same as one of the other positions
-            if (newPos.x != (*it)->x && newPos.y != (*it)->y)
-                canSetPos = true;
+            if (newPos.x == (*it)->x && newPos.y == (*it)->y)
+			{
+				canSetPos = false;
+				break;
+			}
             // If there already is something on this position we break the loop and get a new random position
             else
-            {
-                canSetPos = false;
-                break;
-            }
+				canSetPos = true;
         }
     }
 
