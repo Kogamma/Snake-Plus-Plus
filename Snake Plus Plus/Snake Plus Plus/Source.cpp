@@ -18,12 +18,9 @@ int main()
     sf::Time currentTime;
 
 	sf::RenderWindow window(sf::VideoMode(Sizes().screenSize, Sizes().screenSize), "Snake Plus Plus");
-
-    // The vector holding all the snakeParts the Snake consists of
-    std::vector<SnakePart*> snakeParts;
    
     // Creates a new Snake with 3 parts and a reference to the snakeParts vector 
-    Snake* snake = new Snake(3, snakeParts);;
+    Snake* snake = new Snake(3);;
     
     // Creates a new pickup
     Pickup* pickUp = new Pickup();

@@ -1,7 +1,7 @@
 #include "Snake.h"
 #include <iostream>
 
-Snake::Snake(int startSize, std::vector<SnakePart*>& snakeParts)
+Snake::Snake(int startSize)
 {
     size = startSize;
     orgSize = size;

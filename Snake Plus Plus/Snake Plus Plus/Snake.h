@@ -7,7 +7,7 @@
 class Snake
 {
 public:
-    Snake(int startSize, std::vector<SnakePart*>& snakeParts);
+    Snake(int startSize);
 	~Snake();
 
 	void Update(const sf::Time deltaTime);
